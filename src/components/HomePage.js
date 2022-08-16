@@ -1,4 +1,7 @@
 import React from "react";
+import NavBar from "./NavBar";
+import { ReactDOM } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class HomePage extends React.Component{
     constructor(props){
@@ -43,13 +46,15 @@ class HomePage extends React.Component{
     }
     render(){
         return(
+        <div>
+        <NavBar/>
         <form onSubmit={this.handleSubmit} >
             <label>
                 Enter Your Name: 
                 <input type='text' value={this.state.value} name="yourname" onChange={this.handleChange} />
             </label>
             <input type="submit" value="Submmit" />
-            <a></a>
+            
             <table >
                 <tr>
                     <td>asdad</td>
@@ -63,6 +68,7 @@ class HomePage extends React.Component{
                 </tr>
             </table>
         </form>
+        </div>
         );
     }
 }
