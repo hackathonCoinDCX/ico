@@ -100,4 +100,6 @@ class SignUpDev extends Component {
   }
 }
 
+
+// Add comments
 export default SignUpDev;
