@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import HomePageTable from "./HomePageTable";
-import { Link } from "react-router-dom";
 
 function App(props) {
 
@@ -18,16 +17,10 @@ function App(props) {
 		return (<><p>No entries in table</p></>)
 	}
 	else return (
-		<div className = "App">
-            <Link to="/SignUpDev">SignupDev</Link>   
-			<br/>          
-			<Link to="/SignUpIn">SignUpIn</Link>
-			<br/>          
-            <Link to="/LoginDev">LoginDev</Link>
-			<br/>          
-            <Link to="/LoginIn">LoginIn</Link>
-			<br/>          
+		<div>
+		<div className = "App">       
 			<HomePageTable listiteam={items} tablerowlink={"/Coin/"}></HomePageTable>
+		</div>
 		</div>
 	);
 }
