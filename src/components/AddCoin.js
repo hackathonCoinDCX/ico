@@ -4,11 +4,10 @@ class AddCoin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     };
   }
   handleChange = (event) => {
-    // alert(event.target.value)
     this.setState({ [event.target.name]: event.target.value });
   };
   handleQuantityChange(event) {}
@@ -19,24 +18,14 @@ class AddCoin extends React.Component {
   handleSubmit = (event) => {
     console.log("request success");
     console.log(event);
-    event.preventDefault();
-    
+    // event.preventDefault();
   };
-
   
   render() {
-    // const { DataisLoaded, selectedCoin } = this.state;
-    // if (!DataisLoaded)
-    //   return (
-    //     <div>
-    //       <h1> Pleses wait some time.... </h1>{" "}
-    //     </div>
-    //   );
-
     return (
       <div>
         <h1>List a new coin</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} action="/user/developer/listnewcoin">
             <table>
                 <tr> 
                     <td>Enter Name</td>
@@ -88,7 +77,6 @@ class AddCoin extends React.Component {
                 </tr>
             </table>
         </form>
-        
       </div>
     );
   }

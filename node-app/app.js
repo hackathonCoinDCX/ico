@@ -277,8 +277,10 @@ app.get("/user/developer/coinlist", urlencodedParser, (req, res)=>{
 
 app.post("/user/developer/listnewcoin", urlencodedParser, (req, res)=>{
     console.log("api to /user/developer/listnewcoin");
+    console.log(req.body);
     let sd = new Date();
     let ed = new Date();
+    
     ed.setDate(sd.getDate() + 10);
     sd = sd.toISOString().split('T')[0]
     ed = ed.toISOString().split('T')[0]
@@ -297,6 +299,7 @@ app.post("/user/developer/listnewcoin", urlencodedParser, (req, res)=>{
         min_tokens: 15,
         white_paper: "sample whitepaper"
     };
+
     console.log(newcoindata);
     let sqlInsert = `insert into coinlist(dev_id, coin_name, about, start_date, end_date, start_price, end_price, platform, category, total_tokens, min_tokens, white_paper) values('${newcoindata.dev_id}', '${newcoindata.coin_name}', '${newcoindata.about}', '${newcoindata.start_date}', '${newcoindata.end_date}', ${newcoindata.start_price}, ${newcoindata.end_price}, '${newcoindata.platform}','${newcoindata.category}', ${newcoindata.total_tokens}, ${newcoindata.min_tokens},'${newcoindata.white_paper}')`;
     console.log(sqlInsert);
