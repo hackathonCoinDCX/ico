@@ -20,6 +20,7 @@ class AddCoin extends React.Component {
     console.log("request success");
     console.log(event);
     event.preventDefault();
+    
   };
 
   
@@ -35,7 +36,7 @@ class AddCoin extends React.Component {
     return (
       <div>
         <h1>List a new coin</h1>
-        <form>
+        <form onSubmit={this.handleSubmit}>
             <table>
                 <tr> 
                     <td>Enter Name</td>
@@ -47,19 +48,19 @@ class AddCoin extends React.Component {
                 </tr>
                 <tr> 
                     <td>start date</td>
-                    <td><input type='string'></input></td>
+                    <td><input type='date'></input></td>
                 </tr>
                 <tr> 
                     <td>end date</td>
-                    <td><input type='string'></input></td>
+                    <td><input type='date'></input></td>
                 </tr>
                 <tr> 
                     <td>start price</td>
-                    <td><input type='string'></input></td>
+                    <td><input type='number'></input></td>
                 </tr>
                 <tr> 
                     <td>end price</td>
-                    <td><input type='string'></input></td>
+                    <td><input type='number'></input></td>
                 </tr>
                 <tr> 
                     <td>Platform</td>
@@ -71,15 +72,19 @@ class AddCoin extends React.Component {
                 </tr>
                 <tr> 
                     <td>total token</td>
-                    <td><input type='string'></input></td>
+                    <td><input type='number'></input></td>
                 </tr>
                 <tr> 
                     <td>min token</td>
-                    <td><input type='string'></input></td>
+                    <td><input type='number'></input></td>
                 </tr>
                 <tr> 
                     <td>upload white_paper</td>
                     <td><input type='string'></input></td>
+                </tr>
+                <tr> 
+                    <td></td>
+                    <td><button type="submit" >Submit</button></td>
                 </tr>
             </table>
         </form>
