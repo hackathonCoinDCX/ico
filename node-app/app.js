@@ -10,9 +10,9 @@ app.use(bodyParser.json())
 // Connect Database
 const con = mysql.createConnection({
     host:"localhost",
-    user:"root",
-    password:"password",
-    database:"ico"
+    user:"rails_user",
+    password:"pass",
+    database:"demo_project_development"
 });
 con.connect((err) => {
     if(err) throw err;
