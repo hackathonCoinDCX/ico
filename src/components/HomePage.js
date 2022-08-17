@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import HomePageTable from "./HomePageTable";
 import { Link } from "react-router-dom";
 
-function App() {
+function App(props) {
 
 	const [items, setItems] = useState([]);
 	const [dataIsLoaded, setdataIsLoaded] = useState(false);
