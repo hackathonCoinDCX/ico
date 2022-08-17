@@ -1,0 +1,8 @@
+###
+GET http://localhost:3001/user/developer/coinlist HTTP/1.1
+
+###
+POST http://localhost:3001/user/developer/listnewcoin HTTP/1.1
+
+###
+GET http://localhost:3001/bid/1 HTTP/1.1 
