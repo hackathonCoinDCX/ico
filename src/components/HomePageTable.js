@@ -20,7 +20,7 @@ class HomePageTable extends React.Component{
                     this.props.listiteam.map((item) => (
                     <table>
                         {/* <Link to={"/coin/:"+item.Id}> */}
-                        <Link to={{pathname: "/Coin/"+item.Id, param1: "Par1" }}>
+                        <Link to={{pathname: this.props.tablerowlink+item.Id, param1: "Par1" }}>
                             <tr>
                                 <td>User_Name: { item.dev_id }</td>
                                 <td>User_Name: { item.about }</td>

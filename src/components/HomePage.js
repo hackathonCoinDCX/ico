@@ -39,7 +39,7 @@ class App extends React.Component {
 			<br/>          
             <Link to="/LoginIn">LoginIn</Link>
 			<br/>          
-			<HomePageTable listiteam={items}></HomePageTable>
+			<HomePageTable listiteam={items} tablerowlink={"/Coin/"}></HomePageTable>
 		</div>
 		);
 	}
