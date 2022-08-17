@@ -55,17 +55,17 @@ class Coin extends React.Component{
                         {/* <Link to={"/coin/:"+item.Id}> */}
                         {/* <Link to={{pathname: "/Coin/"+item.Id, param1: "Par1" }}> */}
                             <tr>
-                                <td>User_Name: { item.dev_id }</td>
-                                <td>User_Name: { item.about }</td>
-                                <td>User_Name: { item.start_date }</td>
-                                <td>User_Name: { item.end_date }</td>
-                                <td>User_Name: { item.start_price }</td>
-                                <td>User_Name: { item.end_price }</td>
-                                <td>User_Name: { item.platform }</td>
-                                <td>User_Name: { item.category }</td>
-                                <td>User_Name: { item.total_tokens }</td>
-                                <td>User_Name: { item.min_tokens }</td>
-                                <td>User_Name: { item.white_paper }</td>
+                                <td>dev_id: { item.dev_id }</td>
+                                <td>about: { item.about }</td>
+                                <td>start_date: { item.start_date }</td>
+                                <td>end_date: { item.end_date }</td>
+                                <td>start_price: { item.start_price }</td>
+                                <td>end_price: { item.end_price }</td>
+                                <td>Uplatform: { item.platform }</td>
+                                <td>category: { item.category }</td>
+                                <td>total_tokens: { item.total_tokens }</td>
+                                <td>min_tokens : { item.min_tokens }</td>
+                                <td>white_paper: { item.white_paper }</td>
                             </tr>
                         {/* </Link> */}
                     </table>
