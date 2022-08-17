@@ -7,6 +7,8 @@ import LoginIn from './components/LoginIn'
 import Coin from './components/Coin'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AvailableCoinForm from './components/AvailableBuyCoin';
+import DevDashboard from './components/DevDashboard';
+import AddCoin from './components/AddCoin';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route exact path="/SignUpIn" element={<SignUpIn/>}/>
         <Route exact path="/Coin/:Id" element={<Coin/>}/>
         <Route exact path="/AvailableCoinForm" element={<AvailableCoinForm/>}/>
+        <Route exact path="/DevDashboard" element={<DevDashboard/>}/>
+        <Route exact path="/AddCoin" element={<AddCoin/>}/>
       </Routes>
       </BrowserRouter>
     </div>
