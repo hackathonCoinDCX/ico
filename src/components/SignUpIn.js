@@ -9,11 +9,27 @@ import {
   FormControl
 } from "react-bootstrap";
 
+const axios = require('axios');
+
+export async function getStatus() {
+
+    try{
+        const response = await axios.get('/signup');
+        console.log('response', response)
+        return response.data;
+    }catch(error) {
+        return [];
+    }
+    
+}
+
 class SignUpIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      name: "",
+      email: "",
+      mobile: "",
       password: ""
     };
   }
@@ -23,10 +39,30 @@ class SignUpIn extends Component {
 
   onSignupClick = () => {
     const userData = {
-      username: this.state.username,
-      password: this.state.password
+      name: this.state.name,
+      email: this.state.email,
+      mobile: this.state.mobile,
+      password: this.state.password,
+      confpassword: this.state.confPassword
     };
+    if(userData.name === "" || userData.email === "" || userData.mobile === "" || userData.password === "" || userData.confpassword === ""){
+        alert("Please fill all the fields");
+    }
+    else if(userData.mobile.length !== 10){
+        alert("Please enter a valid mobile number");
+    }
+    else if(userData.password !== userData.confpassword){
+        alert("Password and Confirm Password do not match");
+    }
+    else if (userData.password.length < 8) {
+      alert("Password should be atleast 8 characters");
+    }
+    else{
     console.log("Sign up " + userData.username + " " + userData.password);
+    }
+
+    console.log(getStatus());                   //Api Call
+
   };
 
   render() {
@@ -37,8 +73,8 @@ class SignUpIn extends Component {
             <h1>Sign up for Investor!</h1>
             
             <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Name</Form.Label>
                 <Form.Control name="userName" type="text" placeholder="Enter Name" onChange={this.onChange}/>
               </Form.Group>
               <br />
@@ -52,21 +88,21 @@ class SignUpIn extends Component {
                 <Form.Control name="mobile" type="text" placeholder="Enter Mobile Number" onChange={this.onChange}/>
               </Form.Group>
               <br />
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control name="password" type="password" placeholder="" onChange={this.onChange}/>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control name="password" type="password" placeholder="Enter password" onChange={this.onChange}/>
               </Form.Group>
               <br />
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control name="confPassword" type="password" placeholder="" onChange={this.onChange}/>
+                <Form.Label>Confirm password</Form.Label>
+                <Form.Control name="confPassword" type="password" placeholder="Re-enter password" onChange={this.onChange}/>
               </Form.Group>
             </Form>
             <br />
             <Button 
               color="primary"
               onClick={this.onSignupClick}  
-            >Sign up</Button>
+            >Submit</Button>
 
             <p className="mt-2">
               Already have account? <Link to="/LoginIn">Login</Link>
@@ -77,5 +113,4 @@ class SignUpIn extends Component {
     );
   }
 }
-
 export default SignUpIn;
