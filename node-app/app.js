@@ -180,7 +180,7 @@ app.post("/coinlist", urlencodedParser, (req, res)=>{
     let sqlInsert = 'select * from coinlist';
     let query = con.query(sqlInsert, (err, result) => {
         if(err) throw err;
-        console.log("jsdnasji");
+        //console.log("jsdnasji");
         res.send(JSON.stringify({"status":200, "error":null, response:result}))
     })
     // console.log(req);
@@ -239,6 +239,38 @@ app.get("/coin/:Id", urlencodedParser, (req, res)=>{
     })
     // console.log(req);
 })
+app.get("/user1/:Id",urlencodedParser, (req, res)=>{
+    //console.log(req.params.Id);
+    let sqlInsert = 'select * from bid where Id='+req.params.Id;
+    let query = con.query(sqlInsert, (err, result) => {
+        if(err) throw err;
+        if(result.length==0){
+            res.json({
+                msg : "Empty"
+            })
+        }else{
+            //console.log("dbsajd")
+            for (let i = 0; i < result.length; i++) {
+                var Id = result[i].coin_id;
+                    let element = 'select * from coinlist where Id='+Id;
+                    let query = con.query(element, (err, result1) => {
+                        if(err) throw err;
+                        //console.log(result);
+                        //res.send(result1);
+                        res.json({
+                            coinname:result1[0].coin_name,
+                            about:result1[0].about,
+                            start_price:result1[0].start_price,
+                            end_price:result1[0].end_price,
+                            bid_amount:result[i].bid_amount
+                        })
+                        // res.send(JSON.stringify({"status":200, "error":null, response:result}))
+                    })
+                    // console.log(req);
+                }
+            }
+        })
+    })
 // app.post("/submit-name", urlencodedParser, (req, res)=>{
 //     console.log(req.body.yourname, "asdadsadsas");
 //     let data = { yourname : req.body.yourname };
