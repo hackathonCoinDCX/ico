@@ -13,33 +13,44 @@ class HomePageTable extends React.Component{
         this.setState({[event.target.name]: event.target.value})
     }
 
+    handleroute = (event) => {
+        console.log("asdad");
+    }
+
     render(){
         return (
-            <div>
+            <table>
                 {
-                    this.props.listiteam.map((item) => (
-                    <table>
-                        {/* <Link to={"/coin/:"+item.Id}> */}
-                        <Link to={{pathname: this.props.tablerowlink+item.Id, param1: "Par1" }}>
-                            <tr>
-                                <td>User_Name: { item.dev_id }</td>
-                                <td>User_Name: { item.about }</td>
-                                <td>User_Name: { item.start_date }</td>
-                                <td>User_Name: { item.end_date }</td>
-                                <td>User_Name: { item.start_price }</td>
-                                <td>User_Name: { item.end_price }</td>
-                                <td>User_Name: { item.platform }</td>
-                                <td>User_Name: { item.category }</td>
-                                <td>User_Name: { item.total_tokens }</td>
-                                <td>User_Name: { item.min_tokens }</td>
-                                <td>User_Name: { item.white_paper }</td>
-                            </tr>
-                        </Link>
-                    </table>
-                    ))
+                    <tr>
+                        {
+                            Object.keys(this.props.listiteam[0]).map((k,v) => (
+                                <td>
+                                    {k}
+                                </td>
+                            ))
+                        }
+                    </tr>
                 }
-            </div>
-        );
+                {
+                    this.props.listiteam.map((item) => {
+                        var dd = Object.keys(item).map((key, index) => (
+                            <>
+                                <td>{item[key]}</td> 
+                            </>
+                        ))
+                        return (
+                            <>
+                            <tr>
+                                {dd}
+                                <Link to={this.props.tablerowlink + item.id}>asd</Link>
+                            </tr> 
+                            <br/> <br/> 
+                            </>   
+                        )
+                    })
+                }
+            </table>
+        )
     }
 }
 export default HomePageTable;

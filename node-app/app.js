@@ -10,7 +10,6 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 app.use(bodyParser.json())
 
-
 // Connect Database
 const con = mysql.createConnection({
     host:"localhost",
@@ -24,15 +23,15 @@ con.connect((err) => {
     console.log("Mysql connections");
 });
 
-app.post("/coinlist", urlencodedParser, (req, res)=>{
-    // console.log("if cwalled");
-    let sqlInsert = 'select * from coinlist';
-    let query = con.query(sqlInsert, (err, result) => {
-        if(err) throw err;
-        res.send(JSON.stringify({"status":200, "error":null, response:result}))
-    })
-    // console.log(req);
-})
+// app.post("/coinlist", urlencodedParser, (req, res)=>{
+//     // console.log("if cwalled");
+//     let sqlInsert = 'select * from coinlist';
+//     let query = con.query(sqlInsert, (err, result) => {
+//         if(err) throw err;
+//         res.send(JSON.stringify({"status":200, "error":null, response:result}))
+//     })
+//     // console.log(req);
+// })
 
 app.get("/coinlist", urlencodedParser, (req, res)=>{
     let sqlInsert = 'select * from coinlist';
@@ -47,7 +46,7 @@ app.get("/coinlist", urlencodedParser, (req, res)=>{
 
 app.post("/signup", urlencodedParser, (req, res)=>{
     const data=req.body;
-    let sqlInsert = 'INSERT INTO signup SET ?'; 
+    let sqlInsert = 'INSERT INTO users SET ?'; 
     con.query(sqlInsert,data,(err,result)=>{
         if(err) throw err;
         res.send(JSON.stringify({"status":200, "error":null, response:result}))
