@@ -128,4 +128,5 @@ class AddCoin extends React.Component {
     );
   }
 }
+
 export default withRouter(AddCoin);
