@@ -209,15 +209,16 @@ app.post('/signup', function(req, res) { //register
     let password = req.body.password;
     let mobile = req.body.mobile;
     let developer = req.body.developer;
-    let sqlInsert = 'INSERT INTO signup(name, email, password, mobile, developer) VALUES ("'+name+'", "'+email+'", "'+password+'", "'+mobile+'", "'+developer+'")';
+    let sqlInsert = 'INSERT INTO users(name, email, password, mobile, developer) VALUES ("'+name+'", "'+email+'", "'+password+'", "'+mobile+'", "'+developer+'")';
     let query = con.query(sqlInsert, (err, result) => {
         if(err) throw err;
         res.send(JSON.stringify({"status":200, "error":null, response:result}))
         res.redirect('/login');
     })
 });
+
 app.get("/user/:Id",urlencodedParser,(req,res)=>{
-    let sqlInsert='select * from signup where Id='+req.params.Id;
+    let sqlInsert='select * from users where id='+req.params.Id;
     con.query(sqlInsert,(err,result)=>{
         if(err){
             throw err;
@@ -226,6 +227,7 @@ app.get("/user/:Id",urlencodedParser,(req,res)=>{
         res.send(JSON.stringify({"status":200, "error":null, response:result}));
     })
 })
+
 app.get("/coin/:Id", urlencodedParser, (req, res)=>{
     console.log(req.params.Id);
     let sqlInsert = 'select * from coinlist where Id='+req.params.Id;
@@ -269,7 +271,7 @@ app.get("/user/developer/coinlist", urlencodedParser, (req, res)=>{
             throw err;
         }
         console.log(result);
-        // res.send(result);
+        res.send(result);
     })
 })
 
