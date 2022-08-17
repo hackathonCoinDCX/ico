@@ -18,11 +18,8 @@ function App() {
         <Route exact path="/LoginDev" element={<LoginDev/>}/>
         <Route exact path="/SignUpDev" element={<SignUpDev/>}/>
         <Route exact path="/SignUpIn" element={<SignUpIn/>}/>
-<<<<<<< HEAD
         <Route exact path="/Coin/:Id" element={<Coin/>}/>
-=======
         <Route exact path="/AvailableCoinForm" element={<AvailableCoinForm/>}/>
->>>>>>> 7e87294b4baef01e71b630aff3be55789caf07fc
       </Routes>
       </BrowserRouter>
     </div>
