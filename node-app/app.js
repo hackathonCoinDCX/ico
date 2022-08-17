@@ -73,6 +73,15 @@ app.get("/coin/:Id", urlencodedParser, (req, res)=>{
 //     console.log("asdads");
 //     res.json({"sda":"asdad"});
 // })
+app.get("/coinlist/:id", urlencodedParser, (req, res)=>{
+    let sqlInsert = 'select * from coinlist where id = ' + req.params.id;
+    let query = con.query(sqlInsert, (err, result) => {
+        if(err) throw err;
+        console.log(result);
+        res.send(result);
+    })
+   
+})
 
 app.listen(3001, () => {
     console.log("server running at 3001");
