@@ -8,7 +8,11 @@ class AvailableCoinForm extends React.Component {
       bid_quantity: 0,
       bid_price: 0,
       id:2,
-      status: ''
+      status: '',
+      todaydate: new Date(),
+      expDate: new Date(),
+      startDate: new Date()
+
     };
   }
   handleChange = (event) => {
@@ -24,11 +28,15 @@ class AvailableCoinForm extends React.Component {
         this.setState({
           selectedCoin: json,
         //   status: json.status,
+        expDate: new Date(json[0].end_date),
+        startDate: new Date(json[0].start_date),
         status: 'active',
           DataisLoaded: true,
         });
-        console.log(...json);
-        console.log(this.state.selectedCoin);
+        console.log(json);
+        console.log('today date',this.state.todaydate);
+        console.log('start date',this.state.startDate);
+        console.log('end date',this.state.expDate)
 
       });
   }
@@ -74,8 +82,8 @@ class AvailableCoinForm extends React.Component {
     );
   }
 
-  rendorNotActive(status){
-    if (status === 'upcoming') return(<div>Please be patient</div>);
+  rendorNotActive(){
+    if (this.state.todaydate.getTime()<this.state.startDate.getTime()) return(<div>Please be patient</div>);
     else return (<div> You're late</div>)
   }
 
@@ -120,7 +128,7 @@ class AvailableCoinForm extends React.Component {
         </div>
         {/* <div>{this.renderForm(selectedCoin)}</div> */}
 
-       <div>{(this.state.status === 'active') ?  (this.render(selectedCoin)): (this.rendorNotActive(this.state.status))}</div> 
+       <div>{(this.state.todaydate.getTime()>this.state.startDate.getTime() && this.state.todaydate.getTime()<this.state.expDate.getTime()) ?  (this.renderForm(selectedCoin)): (this.rendorNotActive(this.state.status))}</div> 
 
         {/* <div> 
             {if(this.state.status === 'active') {
