@@ -1,35 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import HomePageTable from "./HomePageTable";
 import { Link } from "react-router-dom";
 
-class App extends React.Component {
+function App() {
 
-	constructor(props) {
-		super(props);
+	const [items, setItems] = useState([]);
+	const [dataIsLoaded, setdataIsLoaded] = useState(false);
 
-		this.state = {
-			items: [],
-			DataisLoaded: false
-		};
+	if(dataIsLoaded == false){
+		fetch("http://127.0.0.1:3001/coinlist").then((res) => res.json()).then((json) => {
+		setItems(json)
+		setdataIsLoaded(true)
+		})
 	}
 
-	componentDidMount() {
-		fetch("http://127.0.0.1:3001/coinlist")
-			.then((res) => res.json())
-			.then((json) => {
-				this.setState({
-					items: json,
-					DataisLoaded: true
-				});
-			})
+	if(items.length==0 || dataIsLoaded==false){
+		return (<><p>No entries in table</p></>)
 	}
-
-	render() {
-		const { DataisLoaded, items } = this.state;
-		if (!DataisLoaded) return <div>
-			<h1> Pleses wait some time.... </h1> </div> ;
-
-		return (
+	else return (
 		<div className = "App">
             <Link to="/SignUpDev">SignupDev</Link>   
 			<br/>          
@@ -41,8 +29,7 @@ class App extends React.Component {
 			<br/>          
 			<HomePageTable listiteam={items} tablerowlink={"/Coin/"}></HomePageTable>
 		</div>
-		);
-	}
+	);
 }
 
 export default App;

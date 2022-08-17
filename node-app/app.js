@@ -332,6 +332,8 @@ app.post("/user/developer/listnewcoin", urlencodedParser, (req, res)=>{
         white_paper: "sample whitepaper"
     };
 
+    newcoindata = req.body;
+
     console.log(newcoindata);
     let sqlInsert = `insert into coinlist(dev_id, coin_name, about, start_date, end_date, start_price, end_price, platform, category, total_tokens, min_tokens, white_paper) values('${newcoindata.dev_id}', '${newcoindata.coin_name}', '${newcoindata.about}', '${newcoindata.start_date}', '${newcoindata.end_date}', ${newcoindata.start_price}, ${newcoindata.end_price}, '${newcoindata.platform}','${newcoindata.category}', ${newcoindata.total_tokens}, ${newcoindata.min_tokens},'${newcoindata.white_paper}')`;
     console.log(sqlInsert);

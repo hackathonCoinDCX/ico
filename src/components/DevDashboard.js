@@ -5,7 +5,7 @@ import {
     useNavigate,
     useParams
   } from "react-router-dom";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
@@ -41,42 +41,23 @@ class DevDashboard extends React.Component {
           coinlist: json,
           DataisLoaded: true,
         });
-        // console.log(this.state.coinlist);
       });
   }
 
-  handleSubmit = (event) => {
-//    navigate('/AddCoin');
-
-  };
-  
-
   render() {
-    // var mock = [
-    //   {
-    //     devID: 5,
-    //     about: "abouttest",
-    //     start_date: null,
-    //     end_date: null,
-    //     start_price: 0,
-    //     end_price: 10,
-    //     platform: "",
-    //     category: "",
-    //     total_tokens: 0,
-    //     min_tokens: 0,
-    //     white_paper: "white ppp",
-    //   },
-    // ];
-
+    if(this.state.coinlist.length === 0){
+      return (
+        <><p>No entries in table</p></>
+      );
+    }
     return (
-        
       <div>
         <h1> Welcome to DevDashboard </h1>
         <div>
           <HomePageTable listiteam={this.state.coinlist} tablerowlink={""} />
         </div>
-        <Link to={{pathname: "/AddCoin", param1: "Par1" }}>
-        <button >Add New Coin</button>
+        <Link to={{pathname: "/AddCoin", params: "Par1", search: `?dev_id=${this.state.coinlist[0].dev_id}`}}>
+        <button>Add New Coin</button>
         </Link>
       </div>
     );
