@@ -29,8 +29,6 @@ function Coin(props) {
             {
               items.map((item) => (
               <table>
-                  {/* <Link to={"/coin/:"+item.Id}> */}
-                  {/* <Link to={{pathname: "/Coin/"+item.Id, param1: "Par1" }}> */}
                       <tr>
                           <td>dev_id: { item.dev_id }</td>
                           <td>about: { item.about }</td>
@@ -53,4 +51,5 @@ function Coin(props) {
     );
   }
 }
+
 export default Coin;
