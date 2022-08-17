@@ -25,8 +25,8 @@ app.use(bodyParser.json())
 // Connect Database
 const con = mysql.createConnection({
     host:"localhost",
-    user:"root",
-    password:"AmanKumar9869151164!",
+    user:"rails_user",
+    password:"pass",
     database:"demo_project_development"
 });
 
