@@ -34,31 +34,23 @@ class LoginDev extends Component {
         <Row>
           <Col md="4">
             <h1>Welcome Developer!</h1>
-            <Form>
-              <Form.Group controlId="usernameId">
-                <Form.Label>User name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  placeholder="Enter user name"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                />
-                <FormControl.Feedback type="invalid"></FormControl.Feedback>
-              </Form.Group>
 
-              <Form.Group controlId="passwordId">
-                <Form.Label>Your password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                />
-                <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+            <Form>
+              
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="email" type="email" placeholder="Enter email" onChange={this.onChange}/>
               </Form.Group>
+              <br />
+              
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Password</Form.Label>
+                <Form.Control name="password" type="password" placeholder="" onChange={this.onChange}/>
+              </Form.Group>
+              <br />
+              
             </Form>
+
             <Button color="primary" onClick={this.onLoginClick}>Login</Button>
             <p className="mt-2">
               Don't have account? <Link to="/SignUpDev">Signup</Link>

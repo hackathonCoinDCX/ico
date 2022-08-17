@@ -6,7 +6,6 @@ import {
   Row,
   Col,
   Form,
-  FormControl
 } from "react-bootstrap";
 
 class SignUpDev extends Component {
@@ -18,7 +17,9 @@ class SignUpDev extends Component {
     };
   }
   onChange = e => {
+    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
+    console.log(this.username);
   };
 
   onSignupClick = () => {
@@ -36,56 +37,32 @@ class SignUpDev extends Component {
           <Col md="4">
             <h1>Sign up for Developer!</h1>
             <Form>
-
-              <Form.Group controlId="usernameId">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uname"
-                  placeholder="Enter your name"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                />
-                <FormControl.Feedback type="invalid"></FormControl.Feedback>
-
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="userName" type="text" placeholder="Enter Name" onChange={this.onChange}/>
               </Form.Group>
-              <Form.Group controlId="useremailId">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uEmail"
-                  placeholder="Enter your email"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                />
-                <FormControl.Feedback type="invalid"></FormControl.Feedback>
+              <br />
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="email" type="email" placeholder="Enter email" onChange={this.onChange}/>
               </Form.Group>
-
-              <Form.Group controlId="passwordId">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  value={this.password}
-                  onChange={this.onChange}
-                />
-                <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
+              <br />
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Mobile</Form.Label>
+                <Form.Control name="mobile" type="text" placeholder="Enter Mobile Number" onChange={this.onChange}/>
               </Form.Group>
-
-              <Form.Group controlId="mobileno">
-                <Form.Label>Mobile No</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="umobile"
-                  placeholder="Enter your mobile no"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                />
-                <FormControl.Feedback type="invalid"></FormControl.Feedback>
-                </Form.Group>
-
+              <br />
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="password" type="password" placeholder="" onChange={this.onChange}/>
+              </Form.Group>
+              <br />
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="confPassword" type="password" placeholder="" onChange={this.onChange}/>
+              </Form.Group>
             </Form>
+            <br />
             <Button 
               color="primary"
               onClick={this.onSignupClick}  

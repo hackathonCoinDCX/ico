@@ -5,7 +5,7 @@ import SignUpDev from './components/SignUpDev'
 import LoginDev from './components/LoginDev'
 import SignUpIn from './components/SignUpIn'
 import LoginIn from './components/LoginIn'
-
+import Coin from './components/Coin'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
         <Route exact path="/LoginDev" element={<LoginDev/>}/>
         <Route exact path="/SignUpDev" element={<SignUpDev/>}/>
         <Route exact path="/SignUpIn" element={<SignUpIn/>}/>
+        <Route exact path="/Coin/:Id" element={<Coin/>}/>
       </Routes>
       </BrowserRouter>
     </div>

@@ -45,6 +45,19 @@ app.get("/coinlist", urlencodedParser, (req, res)=>{
     // console.log(req);
 })
 
+
+app.get("/coin/:Id", urlencodedParser, (req, res)=>{
+    console.log(req.params.Id);
+    let sqlInsert = 'select * from coinlist where Id='+req.params.Id;
+    let query = con.query(sqlInsert, (err, result) => {
+        if(err) throw err;
+        console.log(result);
+        res.send(result);
+        // res.send(JSON.stringify({"status":200, "error":null, response:result}))
+    })
+    // console.log(req);
+})
+
 // app.post("/submit-name", urlencodedParser, (req, res)=>{
 //     console.log(req.body.yourname, "asdadsadsas");
 //     let data = { yourname : req.body.yourname };
