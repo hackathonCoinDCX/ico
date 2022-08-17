@@ -2,8 +2,23 @@ const express = require("express")
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
+const date = require('date-and-time');
+
 const app = express()
 app.use(cors())
+app.use(sessions({
+    secret: "secret-key",
+    resave: false,  
+    expires: new Date(Date.now()),
+    saveUninitialized:true,
+    cookie: { maxAge : 1000 * 60,
+    }
+}));
+
+app.use(cookieParser());
+
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 app.use(bodyParser.json())
@@ -14,10 +29,152 @@ const con = mysql.createConnection({
     password:"pass",
     database:"demo_project_development"
 });
+
 con.connect((err) => {
     if(err) throw err;
     console.log("Mysql connections");
 });
+
+///////////////////////// APIs /////////////////////////////////
+var iid = "";
+
+app.get('/checksession', (req, res) => {
+    console.log("check session :/ "+req.session);
+    console.log("seonaofn "+req.sessionID);
+    iid = req.sessionID;
+    console.log(iid);
+    var qry = `select * from session where sessiontoken = '${iid}'`
+    con.query(qry, (err, result) => {
+        if(err) throw err;
+        console.log("asdas : " + JSON.stringify(result));
+        if(result.length == 0){
+            // var qry = `delete from session;`
+            // con.query(qry, (err, result1) => {
+            //     if (err) throw err;
+            //     else{
+            //         console.log("session deleted");
+            //         iid = "";
+            //     }
+            // });
+            res.send({"statusCode":200, "isExpire": true});
+        }
+        else{
+            res.send({"statusCode":200, "isExpire": false});
+        }
+    });
+});
+
+app.post('/deletesession', (req, res) => {
+    // let { sid } = req.body;
+    iid = req.sessionID;
+    console.log("asdadsAsasdadsasddas "+ iid);
+    var qry = `select sessiontoken from session where sessiontoken= '${iid}'`
+    con.query(qry, (err, result) => {
+        if(err) throw err;
+        console.log("asdas : " + JSON.stringify(result));
+        if(result.length == 0){
+            res.send({"statusCode":200, "isExpire": true});
+        }
+        else{
+            var qry = `delete from session where sessiontoken='${iid}'`
+            con.query(qry, (err, result1) => {
+                if (err) throw err;
+                else{
+                    console.log("session deleted");
+                    iid = "";
+                    res.sessionID = "";
+                    res.send({"statusCode":200, "isExpire": true});
+                }
+            });
+        }
+    });
+});
+
+app.post('/login', (req, res, next) => {
+    // let { email, password } = req.body;
+
+    let email="aab";
+    let password = "ass";
+
+    email = email.toLowerCase();
+    // if(!email.length){
+    //     return res.json({'alert': 'enter your email'});
+    // } else if(password.length < 8){
+    //     return res.json({'alert': 'password should be 8 letters long'});
+    // }
+    
+    var qry = `select email from users where email= '${email}'`
+    con.query(qry, (err, result) => {
+        if(err) throw err;
+        // console.log(result.length);
+        console.log("asdads : " + JSON.stringify(result));
+        
+        if(result.length==0){
+            console.log(JSON.stringify(result), "empty");
+            console.log("Incorrect Email");
+            res.setHeader('Content-Type', 'application/json');
+            return res.json({"alert":"Incorrect Email"});
+        }
+        else {
+            console.log(JSON.stringify(result), "rows");
+            qry = `select password from users where email='${email}' and password='${password}'`
+            console.log(qry);
+            con.query(qry, (err, result2, fields) => {
+                if(err) throw err;
+                console.log(JSON.stringify(result2));
+                console.log(password);
+                if(result2.length ==0){
+                    console.log("Incorrect Password");
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.json({"alert":"Incorrect Password"});
+                }
+                else{
+                    emailAll = email;
+                    console.log(emailAll);
+                    console.log("Login Successful");
+                    res.setHeader('Content-Type', 'application/json');
+
+                    qry3 = `select * from users where email='${email}'`;
+                    con.query(qry3, (err, result3) => {
+                        if(err) throw err;
+                        console.log(`Result3 : ${JSON.stringify(result3)}`);
+
+                        if(result3.length==0){
+                            req.session.msg = `Authentication failed: ${result.failMessage}`
+                            console.log(req.session);
+                        }
+                        else{
+                            console.log(`Final Result: ${JSON.stringify(result3)}`);
+                            req.session.regenerate(() => {
+                            req.session.user = result3;
+                            req.session.msg = `Authenticated as ${JSON.stringify(result3)}`;
+                            console.log(`Session:${req.session}`);
+                            console.log(`Session:${JSON.stringify(req.session)}`);
+                            console.log(`${JSON.stringify(req.sessionID)}`);
+                            var now  =  new Date();
+                            var value = date.format(now,'YYYY-MM-DD HH:mm:ss');
+                            qry4 = `insert into session values(${req.session.user[0].id}, '${req.sessionID}', '${value}', '${date.format(req.session.cookie.expires,'YYYY-MM-DD HH:mm:ss')}')`
+                            console.log(qry4);
+                        
+                            con.query(qry4, (err, result4)=>{
+                                if (err) throw err;
+                                else{
+                                    iid = req.sessionID;
+                                    console.log("successfully Added"+ result4);
+                                }
+                            })
+                            res.json(req.session);
+                            });
+                        }
+                    })
+                }
+            });
+        }
+    });
+});
+
+///////////////////////////////////////////////////////////////
+
 app.post("/coinlist", urlencodedParser, (req, res)=>{
     // console.log("if cwalled");
     let sqlInsert = 'select * from coinlist';
