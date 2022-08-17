@@ -45,6 +45,15 @@ app.get("/coinlist", urlencodedParser, (req, res)=>{
     // console.log(req);
 })
 
+app.post("/signup", urlencodedParser, (req, res)=>{
+    const data=req.body;
+    let sqlInsert = 'INSERT INTO signup SET ?'; 
+    con.query(sqlInsert,data,(err,result)=>{
+        if(err) throw err;
+        res.send(JSON.stringify({"status":200, "error":null, response:result}))
+    })
+})
+
 
 app.get("/coin/:Id", urlencodedParser, (req, res)=>{
     console.log(req.params.Id);
