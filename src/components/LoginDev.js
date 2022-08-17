@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   Container,
   Button,
@@ -9,11 +10,18 @@ import {
   FormControl
 } from "react-bootstrap";
 
+const axios = require('axios');
+
+export async function validateUser(data) {
+  const response = await axios.post(`/login`, {user: data});
+  return response.data;
+}
+
 class LoginDev extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password: ""
     };
   }
@@ -23,10 +31,13 @@ class LoginDev extends Component {
 
   onLoginClick = () => {
     const userData = {
-      username: this.state.username,
+      email: this.state.username,
       password: this.state.password
     };
-    console.log("Login " + userData.username + " " + userData.password);
+
+    validateUser(userData);
+    
+    console.log("Login " + userData.email + " " + userData.password);
   };
   render() {
     return (
