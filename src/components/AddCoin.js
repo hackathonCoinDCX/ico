@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { Container } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 
 function AddCoin(props) {
@@ -61,58 +62,63 @@ function AddCoin(props) {
   return (
     <div>
       <h1>List a new coin</h1>
-      <form onSubmit={handleSubmit}>
-          <table>
-              <tr> 
-                  <td>Enter Name</td>
-                  <td><input name="coin_name" type='string' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>about</td>
-                  <td><input name="about" type='string' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>start date</td>
-                  <td><input name="start_date" type='date' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>end date</td>
-                  <td><input name="end_date" type='date' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>start price</td>
-                  <td><input name="start_price" type='number' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>end price</td>
-                  <td><input name="end_price" type='number' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>Platform</td>
-                  <td><input name="platform" type='string' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>Category</td>
-                  <td><input name="category" type='string' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>total token</td>
-                  <td><input name="total_tokens" type='number' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>min token</td>
-                  <td><input name="min_tokens" type='number' onChange={handleChange}/></td>
-              </tr>
-              <tr> 
-                  <td>upload white_paper</td>
-                  <td><input name="white_paper" type='string' onChange={handleChange}/></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td><button type="submit">Submit</button></td>
-              </tr>
-          </table>
-      </form>
+      <br/>
+      <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200%', width: '200%',}}>
+        <br/>
+        <form onSubmit={handleSubmit}>
+            <table>
+                <tr> 
+                    <td>Enter Name</td>
+                    <td><input name="coin_name" type='string' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>about</td>
+                    <td><input name="about" type='string' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>start date</td>
+                    <td><input name="start_date" type='date' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>end date</td>
+                    <td><input name="end_date" type='date' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>start price</td>
+                    <td><input name="start_price" type='number' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>end price</td>
+                    <td><input name="end_price" type='number' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>Platform</td>
+                    <td><input name="platform" type='string' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>Category</td>
+                    <td><input name="category" type='string' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>total token</td>
+                    <td><input name="total_tokens" type='number' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>min token</td>
+                    <td><input name="min_tokens" type='number' onChange={handleChange}/></td>
+                </tr>
+                <tr> 
+                    <td>upload white_paper</td>
+                    <td><input name="white_paper" type='string' onChange={handleChange}/></td>
+                </tr>
+                <br/>
+                <tr>
+                    <td></td>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+      </Container>
     </div>
   );
 }

@@ -39,46 +39,44 @@ function SignUpDev(props) {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col md="4">
-          <h1>Sign up for Developer!</h1>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control name="name" type="text" placeholder="Enter Name" onChange={onChange}/>
-            </Form.Group>
-            <br />
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control name="email" type="email" placeholder="Enter email" onChange={onChange}/>
-            </Form.Group>
-            <br />
-            <Form.Group className="mb-3" controlId="formBasicMobile">
-              <Form.Label>Mobile</Form.Label>
-              <Form.Control name="mobile" type="text" placeholder="Enter Mobile Number" onChange={onChange}/>
-            </Form.Group>
-            <br />
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control name="password" type="password" placeholder="Enter password" onChange={onChange}/>
-            </Form.Group>
-            <br />
-            <Form.Group className="mb-3" controlId="formBasicConfPass">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control name="confPassword" type="password" placeholder="Re-enter password" onChange={onChange}/>
-            </Form.Group>
-          </Form>
+    <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200%', width: '200%',}}>
+      <Col md="4">
+        <h1>Sign up for Developer!</h1>
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control name="name" type="text" placeholder="Enter Name" onChange={onChange}/>
+          </Form.Group>
           <br />
-          <Button
-            color="primary"
-            onClick={onSignupClick}  
-          >Sign up</Button>
-          <p className="mt-2">
-            Already have account? <Link to="/LoginDev">Login</Link>
-          </p>
-        </Col>
-      </Row>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control name="email" type="email" placeholder="Enter email" onChange={onChange}/>
+          </Form.Group>
+          <br />
+          <Form.Group className="mb-3" controlId="formBasicMobile">
+            <Form.Label>Mobile</Form.Label>
+            <Form.Control name="mobile" type="text" placeholder="Enter Mobile Number" onChange={onChange}/>
+          </Form.Group>
+          <br />
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control name="password" type="password" placeholder="Enter password" onChange={onChange}/>
+          </Form.Group>
+          <br />
+          <Form.Group className="mb-3" controlId="formBasicConfPass">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control name="confPassword" type="password" placeholder="Re-enter password" onChange={onChange}/>
+          </Form.Group>
+        </Form>
+        <br />
+        <Button
+          color="primary"
+          onClick={onSignupClick}  
+        >Sign up</Button>
+        <p className="mt-2">
+          Already have account? <Link to="/LoginDev">Login</Link>
+        </p>
+      </Col>
     </Container>
   );
 }

@@ -35,31 +35,29 @@ function LoginDev(props) {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col md="4">
-          <h1>Welcome Developer!</h1>
-           <Form>
-             <Form.Group className="mb-3" controlId="formBasicEmail">
-               <Form.Label>Email address</Form.Label>
-              <Form.Control name="email" type="email" placeholder="Enter email" onChange={onChange}/>
-           </Form.Group>
-           <br />
-            
+    <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200%', width: '200%',}}>
+      <Col md="4">
+        <h1>Welcome Developer!</h1>
+          <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Password</Form.Label>
-              <Form.Control name="password" type="password" placeholder="" onChange={onChange}/>
-           </Form.Group>
-             <br />
-            
-           </Form>
+              <Form.Label>Email address</Form.Label>
+            <Form.Control name="email" type="email" placeholder="Enter email" onChange={onChange}/>
+          </Form.Group>
+          <br />
+          
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Password</Form.Label>
+            <Form.Control name="password" type="password" placeholder="" onChange={onChange}/>
+          </Form.Group>
+            <br />
+          
+          </Form>
 
-           <Button color="primary" onClick={onLoginClick}>Login</Button>
-           <p className="mt-2">
-            Don't have account? <Link to="/SignUpDev">Signup</Link>
-          </p>
-         </Col>
-       </Row>
+          <Button color="primary" onClick={onLoginClick}>Login</Button>
+          <p className="mt-2">
+          Don't have account? <Link to="/SignUpDev">Signup</Link>
+        </p>
+        </Col>
      </Container>
   );
 }

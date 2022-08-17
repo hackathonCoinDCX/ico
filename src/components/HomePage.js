@@ -17,7 +17,7 @@ function App(props) {
 		return (<><p>No entries in table</p></>)
 	}
 	else return (
-		<div>
+		<div style={{display: 'flex',alignItems: 'center',justifyContent: 'center'}}>
 		<div className = "App">       
 			<HomePageTable listiteam={items} tablerowlink={"/Coin/"}></HomePageTable>
 		</div>
