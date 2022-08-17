@@ -17,7 +17,12 @@ class HomePageTable extends React.Component{
         console.log("asdad");
     }
 
+
+
     render(){
+        if(this.props.listiteam.length === 0){
+            return (<><p>no entries to show in table</p></>)
+        }
         return (
             <table>
                 {
@@ -42,7 +47,7 @@ class HomePageTable extends React.Component{
                             <>
                             <tr>
                                 {dd}
-                                <Link to={this.props.tablerowlink + item.id}>asd</Link>
+                                <Link style={{ display: (this.props.tablerowlink === "")?'none':'block'}} to={this.props.tablerowlink + item.id}>asd</Link>
                             </tr> 
                             <br/> <br/> 
                             </>   
