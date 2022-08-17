@@ -1,15 +1,15 @@
 import './App.css';
-import HomePage from './components/HomePage'
-import SignUpDev from './components/SignUpDev'
-import LoginDev from './components/LoginDev'
-import SignUpIn from './components/SignUpIn'
-import LoginIn from './components/LoginIn'
-import Coin from './components/Coin'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AvailableCoinForm from './components/AvailableBuyCoin';
-import DevDashboard from './components/DevDashboard';
-import AddCoin from './components/AddCoin';
-import NavBar from "./components/NavBar";
+import Coin from './components/Coin'
+import HomePage from './components/HomePage'
+import SignUpDev from './components/signup/SignUpDev'
+import LoginDev from './components/login/LoginDev'
+import SignUpIn from './components/signup/SignUpIn'
+import LoginIn from './components/login/LoginIn'
+import AvailableCoinForm from './components/investor/AvailableBuyCoin';
+import DevDashboard from './components/developer/DevDashboard';
+import AddCoin from './components/developer/AddCoin';
+import NavBar from "./components/utility/NavBar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {

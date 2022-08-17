@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HomePageTable from "./HomePageTable";
+import HomePageTable from "../utility/HomePageTable";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 

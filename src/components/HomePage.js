@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HomePageTable from "./HomePageTable";
+import HomePageTable from "./utility/HomePageTable";
 
 function App(props) {
 
