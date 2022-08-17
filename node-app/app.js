@@ -325,6 +325,7 @@ app.get("/bid/:investorid", urlencodedParser, (req, res)=>{
         // res.send(result);
     })
 })
+
 app.listen(3001, () => {
     console.log("server running at 3001");
 })
