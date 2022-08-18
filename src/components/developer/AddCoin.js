@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import { Container } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AddCoin(props) {
 
   const location = useLocation()
+  const navigate = useNavigate()
+
   var dead = new URLSearchParams(location.search).get("dev_id")
   console.log("id: ", dead);
 
@@ -39,19 +41,26 @@ function AddCoin(props) {
     let data = coinlistobj;
     fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
+        // mode: 'cors', // no-cors, *cors, same-origin
+        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: 'same-origin', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        // redirect: 'follow', // manual, *follow, error
+        // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
-      }).then((res) => { return res.body; })
+      }).then((res) => { console.log(res); return res.json(); })
 			.then((json) => {
-        console.log(json, " ", json.alert)
+        console.log(json)
+        if(json.alert){
+          alert(json.alert);
+        }
+        else{
+          alert("New Coin Added!");
+          navigate('/DevDashboard');
+        }
         // console.log("json from response is: " + json);
 			})
       event.preventDefault();
