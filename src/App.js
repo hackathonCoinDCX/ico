@@ -26,9 +26,9 @@ function App() {
           <Route exact path="/SignUpIn" element={<SignUpIn/>}/>
           <Route exact path="/Coin/:Id" element={<Coin/>}/>
           <Route exact path="/AvailableCoinForm" element={<AvailableCoinForm/>}/>
-          <Route exact path="/DevDashboard" element={<DevDashboard/>}/>
+          <Route exact path="/DevDashboard/:id" element={<DevDashboard/>}/>
           <Route exact path="/AddCoin" element={<AddCoin/>}/>
-          <Route exact path="/InvDashboard" element={<InvDashboard/>}/>
+          <Route exact path="/InvDashboard/:id" element={<InvDashboard/>}/>
         </Routes>
         </BrowserRouter>
       </div>

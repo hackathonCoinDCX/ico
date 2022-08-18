@@ -1,43 +1,63 @@
 import React, { useState, Component } from "react";
-import { Link } from "react-router-dom";
+import { Link , Routes, Route, useNavigate} from "react-router-dom";
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
-
+import LoginDev from "../login/LoginDev";
 function SignUpDev(props) {
-
-	const [user, setUser] = useState({
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
     name:"",
     email:"",
     mobile:"",
     password:"",
+    confPassword:"",
     developer:true,
-    wallet:""
+    wallet:"This is my wallet"
   });
-
   function onSignupClick() {
+    // let input = {[user.confPassword]: confPassword.value };
+    // setUser({...user, ...input});
     console.log("signup click");
-    if(user.name === "" || user.email === "" || user.mobile === "" || user.password === "" || user.confpassword === ""){
+    if(user.name === "" || user.email === "" || user.mobile === "" || user.password === "" || user.confPassword === ""){
       alert("Please fill all the fields");
     }
-    else if(user.mobile.length !== 10){
+    else if(user.mobile.length != 10){
         alert("Please enter a valid mobile number");
     }
-    else if(user.password !== user.confpassword){
+    else if(user.password != user.confPassword){
         alert("Password and Confirm Password do not match");
     }
-    else if (user.password.length < 8) {
-      alert("Password should be atleast 8 characters");
+    else if (user.password.length < 3) {
+      alert("Password should be atleast 3 characters");
     }
     else{
-    console.log("Sign up " + user.username + " " + user.password);
-    } 
+    console.log("Sign up " + user.name + " " + user.password);
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: user.name,  email: user.email, mobile: user.mobile, developer:1, password: user.password, wallet:user.mobile})
+    };
+    fetch('http://127.0.0.1:3001/signup', requestOptions)
+        .then(response => response.json())
+        .then( (data) => {
+            // setUser({id: data.id})
+            console.log(data);
+            if(data.msg === "Successfull"){
+                console.log(data.dev_id);
+                // this.setState({ dev_id: data.id});
+                navigate('/LoginDev');
+            }
+            else{
+                alert("Incorrect Email or Password \nPlease check your login information.");
+            }
+        });
   }
-
   function onChange(e){
     console.log(e.target.name, e.target.value);
     let input = {[e.target.name]: e.target.value };
     setUser({...user, ...input});
+    console.log("Hello", user);
   }
-
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200%', width: '200%',}}>
       <Col md="4">
@@ -71,15 +91,17 @@ function SignUpDev(props) {
         <br />
         <Button
           color="primary"
-          onClick={onSignupClick}  
+          onClick={onSignupClick}
         >Sign up</Button>
         <p className="mt-2">
           Already have account? <Link to="/LoginDev">Login</Link>
         </p>
       </Col>
+      <Routes>
+          <Route path="/LoginDev" element={<LoginDev/>} />
+      </Routes>
     </Container>
   );
 }
-
 // Add comments
 export default SignUpDev;

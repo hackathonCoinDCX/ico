@@ -63,7 +63,7 @@ function AddCoin(props) {
         }
         else{
           alert("New Coin Added!");
-          navigate('/DevDashboard');
+          navigate('/DevDashboard/'+`${dead}`);
         }
         // console.log("json from response is: " + json);
 			})

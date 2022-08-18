@@ -12,7 +12,7 @@ function DevDashboard(props) {
 	const [dataIsLoaded, setdataIsLoaded] = useState(false);
 
 	if(dataIsLoaded == false){
-		fetch(`http://127.0.0.1:3001/user/developer/coinlist`)
+		fetch(`http://127.0.0.1:3001/user/developer/coinlist/${params.id}`)
       .then((res) => res.json())
       .then((json) => {
         setCoinlist(json)
@@ -21,11 +21,21 @@ function DevDashboard(props) {
 	}
 
 	if(coinlist.length==0 || dataIsLoaded==false){
-		return (<><p>No entries in table</p></>)
+		return (<>
+    <p>No entries in table</p>
+    <Link to={{pathname: "/AddCoin", search: `?dev_id=${params.id}`}}>
+    <button>Add New Coin</button>
+    </Link>
+    </>)
 	}
 	if(coinlist.length === 0){
     return (
-      <><p>No entries in table</p></>
+      <>
+      <p>No entries in table</p>
+      <Link to={{pathname: "/AddCoin", search: `?dev_id=${params.id}`}}>
+      <button>Add New Coin</button>
+      </Link>
+      </>
     );
   }
 
@@ -43,7 +53,7 @@ function DevDashboard(props) {
       <div>
         <HomePageTable listiteam={coinlist} tablerowlink={""} />
       </div>
-      <Link to={{pathname: "/AddCoin", search: `?dev_id=${coinlist[0].dev_id}`}}>
+      <Link to={{pathname: "/AddCoin", search: `?dev_id=${params.id}`}}>
       <button>Add New Coin</button>
       </Link>
       <button onClick={checkSession}>check seesion</button>

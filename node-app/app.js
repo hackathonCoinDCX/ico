@@ -41,6 +41,22 @@ con.connect((err) => {
 var iid = "";
 var usertype = "";
 
+
+app.post('/signup', function(req, res) { //register
+    let name = req.body.name;
+    let email = req.body.email;
+    let password = req.body.password;
+    let mobile = req.body.mobile;
+    let developer = req.body.developer;
+    let wallet = req.body.wallet;
+    let sqlInsert = 'INSERT INTO users(name, email, password, mobile, developer, wallet) VALUES ("'+name+'", "'+email+'", "'+password+'", "'+mobile+'", "'+developer+'", "'+wallet+'")';
+    console.log(sqlInsert);
+    let query = con.query(sqlInsert, (err, result) => {
+        if(err) throw err;
+        res.send(JSON.stringify({"status":200, "error":null, msg:"Successfull", response:result}))
+    })
+});
+
 app.get('/checksession', (req, res) => {
     console.log(iid);
     console.log("check session :/ "+iid);
@@ -102,7 +118,7 @@ app.post('/deletesession', (req, res) => {
                     console.log("session deleted");
                     iid = "";
                     res.sessionID = "";
-                    res.send({"statusCode":200, "isExpire": true});
+                    res.send({"statusCode":200, "isExpire": true, msg:"Successfull"});
                 }
             });
         }
@@ -110,10 +126,10 @@ app.post('/deletesession', (req, res) => {
 });
 
 app.post('/LoginIn', (req, res, next) => {
-    // let { email, password } = req.body;
-    let email="aab";
-    let password = "ass";
-    email = email.toLowerCase();
+    let { username, password } = req.body;
+    let email=username;
+    // let password = "ass";
+    // email = email.toLowerCase();
     // if(!email.length){
     //     return res.json({'alert': 'enter your email'});
     // } else if(password.length < 8){
@@ -175,7 +191,7 @@ app.post('/LoginIn', (req, res, next) => {
                                     console.log("successfully Added"+ result4);
                                 }
                             })
-                            res.send({"inv_id": result3.id});
+                            res.send({msg: "Successfull" , "dev_id": result3[0].id});
                             });
                         }
                     })
@@ -191,7 +207,7 @@ app.post('/LoginDev', (req, res, next) => {
     let email = username
     // let email="aab";
     // let password = "ass";
-    email = email.toLowerCase();
+    // email = email.toLowerCase();
     // if(!email.length){
     //     return res.json({'alert': 'enter your email'});
     // } else if(password.length < 8){
@@ -230,9 +246,10 @@ app.post('/LoginDev', (req, res, next) => {
                     con.query(qry3, (err, result3) => {
                         if(err) throw err;
                         console.log(`Result3 : ${JSON.stringify(result3)}`);
-                        if(result3.length==0){
+                        if(result3.length==0 || result3[0].developer==0){
                             req.session.msg = `Authentication failed: ${result.failMessage}`
                             console.log(req.session);
+                            res.send({msg: "Login Failed"});
                         }
                         else{
                             console.log(`Final Result: ${JSON.stringify(result3)}`);
@@ -255,7 +272,7 @@ app.post('/LoginDev', (req, res, next) => {
                                     console.log("successfully Added"+ result4);
                                 }
                             })
-                            res.send({msg: "Successfull" , dev_id: result3.id});
+                            res.send({msg: "Successfull" , dev_id: result3[0].id});
                             });
                         }
                     })
@@ -289,19 +306,19 @@ app.get("/coinlist", urlencodedParser, (req, res)=>{
     // console.log(req);
 })
 
-app.post('/signup', function(req, res) { //register
-    let name = req.body.name;
-    let email = req.body.email;
-    let password = req.body.password;
-    let mobile = req.body.mobile;
-    let developer = req.body.developer;
-    let sqlInsert = 'INSERT INTO users(name, email, password, mobile, developer) VALUES ("'+name+'", "'+email+'", "'+password+'", "'+mobile+'", "'+developer+'")';
-    let query = con.query(sqlInsert, (err, result) => {
-        if(err) throw err;
-        res.send(JSON.stringify({"status":200, "error":null, response:result}))
-        res.redirect('/login');
-    })
-});
+// app.post('/signup', function(req, res) { //register
+//     let name = req.body.name;
+//     let email = req.body.email;
+//     let password = req.body.password;
+//     let mobile = req.body.mobile;
+//     let developer = req.body.developer;
+//     let sqlInsert = 'INSERT INTO users(name, email, password, mobile, developer) VALUES ("'+name+'", "'+email+'", "'+password+'", "'+mobile+'", "'+developer+'")';
+//     let query = con.query(sqlInsert, (err, result) => {
+//         if(err) throw err;
+//         res.send(JSON.stringify({"status":200, "error":null, response:result}))
+//         res.redirect('/login');
+//     })
+// });
 
 app.get("/user/:Id",urlencodedParser,(req,res)=>{
     let sqlInsert='select * from users where id='+req.params.Id;
@@ -368,10 +385,12 @@ app.get("/coinlist/:id", urlencodedParser, (req, res)=>{
     })
 })
 
-app.get("/user/developer/coinlist", urlencodedParser, (req, res)=>{
+app.get("/user/developer/coinlist/:id", urlencodedParser, (req, res)=>{
     console.log("api to /user/developer/coinlist");
-    let devid = 1;
-    let sqlInsert = 'select * from coinlist where dev_id=' + devid;
+    let id = req.params.id;
+    console.log(req.params);
+    console.log(id);
+    let sqlInsert = 'select * from coinlist where dev_id=' + id;
     let query = con.query(sqlInsert, (err, result) => {
         if(err) {
             throw err;
@@ -429,6 +448,21 @@ app.post("/user/developer/listnewcoin", urlencodedParser, (req, res, next)=>{
         console.log("catch block");
         res.send({"alert":"Duplicate coin name"});
     }
+})
+
+app.get("/user/investor/coinlist/:id", urlencodedParser, (req, res)=>{
+    console.log("api to /user/investor/coinlist");
+    let id = req.params.id;
+    console.log(req.params);
+    console.log(id);
+    let sqlInsert = 'select * from bid where user_id=' + id;
+    let query = con.query(sqlInsert, (err, result) => {
+        if(err) {
+            throw err;
+        }
+        // console.log(result);
+        res.send(result);
+    })
 })
 
 app.get("/bid/:investorid", urlencodedParser, (req, res)=>{

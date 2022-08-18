@@ -2,6 +2,7 @@ import React, { useState, Component } from "react";
 import { Link , Routes, Route, useNavigate} from "react-router-dom";
 import DevDashboard from '../developer/DevDashboard';
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
+
 function LoginDev(props) {
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -25,10 +26,12 @@ function LoginDev(props) {
     fetch('http://127.0.0.1:3001/LoginDev', requestOptions)
         .then(response => response.json())
         .then( (data) => {
-            if(data.msg == "Successfull"){
-                console.log(JSON.stringify(data.id));
+            // setUser({id: data.id})
+            console.log(data);
+            if(data.msg === "Successfull"){
+                console.log(data.dev_id);
                 // this.setState({ dev_id: data.id});
-                navigate('/DevDashboard', { dev_id: data.id });
+                navigate('/DevDashboard/'+data.dev_id);
             }
             else{
                 alert("Incorrect Email or Password \nPlease check your login information.");
@@ -62,15 +65,9 @@ function LoginDev(props) {
         </p>
         </Col>
         <Routes>
-          <Route path="/DevDashboard" element={<DevDashboard/>} />
+          <Route path="/DevDashboard/:id" element={<DevDashboard/>} />
       </Routes>
      </Container>
   );
 }
 export default LoginDev;
-
-
-
-
-
-
