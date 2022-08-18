@@ -14,4 +14,10 @@ GET http://localhost:3001/checksession HTTP/1.1
 POST http://localhost:3001/deletesession HTTP/1.1
 
 ###
-POST http://localhost:3001/login HTTP/1.1
+POST http://localhost:3001/LoginDev HTTP/1.1
+content-type: application/json
+
+{
+    "username":"aab",
+    "password":"ass"
+}

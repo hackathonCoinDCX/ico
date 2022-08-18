@@ -13,7 +13,7 @@ app.use(sessions({
     resave: false,  
     expires: new Date(Date.now()),
     saveUninitialized:true,
-    cookie: { maxAge : 1000 * 60,
+    cookie: { maxAge : 1000*60,
     }
 }));
 
@@ -27,7 +27,8 @@ const con = mysql.createConnection({
     host:"localhost",
     user:"rails_user",
     password:"pass",
-    database:"demo_project_development"
+    database:"demo_project_development",
+    // dateStrings: true
 });
 
 con.connect((err) => {
@@ -38,11 +39,13 @@ con.connect((err) => {
 ///////////////////////// APIs /////////////////////////////////
 
 var iid = "";
+var usertype = "";
 
 app.get('/checksession', (req, res) => {
-    console.log("check session :/ "+req.session);
-    console.log("seonaofn "+req.sessionID);
-    iid = req.sessionID;
+    console.log(iid);
+    console.log("check session :/ "+iid);
+    // console.log("seonaofn "+req.sessionID);
+    // iid = req.sessionID;
     console.log(iid);
     var qry = `select * from session where sessiontoken = '${iid}'`
     con.query(qry, (err, result) => {
@@ -60,7 +63,22 @@ app.get('/checksession', (req, res) => {
             res.send({"statusCode":200, "isExpire": true});
         }
         else{
-            res.send({"statusCode":200, "isExpire": false});
+            let dd = new Date(result[0].sessionend)
+            let cd = new Date()
+
+            cd = new Date(cd.getTime() - 1000*60*60*24 + 1000*60*60*10 + 1000*60*35);
+            console.log(dd, " ", cd);
+            console.log(dd.getTime(), " ", cd.getTime());
+
+            if(dd.getTime() < cd.getTime()){
+                console.log("expired");
+                iid = "";
+                res.send({"statusCode":200, "isExpire": true});
+            }
+            else{
+                console.log("not expired");
+                res.send({"statusCode":200, "isExpire": false});
+            }
         }
     });
 });
@@ -225,8 +243,10 @@ app.post('/LoginDev', (req, res, next) => {
                             console.log(`Session:${JSON.stringify(req.session)}`);
                             console.log(`${JSON.stringify(req.sessionID)}`);
                             var now  =  new Date();
+                            var expirey = new Date(now.getTime() + 60 * 1000);
                             var value = date.format(now,'YYYY-MM-DD HH:mm:ss');
-                            qry4 = `insert into session values(${req.session.user[0].id}, '${req.sessionID}', '${value}', '${date.format(req.session.cookie.expires,'YYYY-MM-DD HH:mm:ss')}')`
+                            var valueexpirey = date.format(expirey,'YYYY-MM-DD HH:mm:ss');
+                            qry4 = `insert into session values(${req.session.user[0].id}, '${req.sessionID}', '${value}', '${valueexpirey}')`
                             console.log(qry4);
                             con.query(qry4, (err, result4)=>{
                                 if (err) throw err;
@@ -356,7 +376,7 @@ app.get("/user/developer/coinlist", urlencodedParser, (req, res)=>{
         if(err) {
             throw err;
         }
-        console.log(result);
+        // console.log(result);
         res.send(result);
     })
 })
@@ -388,7 +408,7 @@ app.post("/user/developer/listnewcoin", urlencodedParser, (req, res, next)=>{
 
     newcoindata = req.body;
 
-    console.log(newcoindata);
+    // console.log(newcoindata);
     let sqlInsert = `insert into coinlist(dev_id, coin_name, about, start_date, end_date, start_price, end_price, platform, category, total_tokens, min_tokens, white_paper) values('${newcoindata.dev_id}', '${newcoindata.coin_name}', '${newcoindata.about}', '${newcoindata.start_date}', '${newcoindata.end_date}', ${newcoindata.start_price}, ${newcoindata.end_price}, '${newcoindata.platform}','${newcoindata.category}', ${newcoindata.total_tokens}, ${newcoindata.min_tokens},'${newcoindata.white_paper}')`;
     console.log("SQL Query : ==> " + sqlInsert);
     try {
@@ -401,7 +421,7 @@ app.post("/user/developer/listnewcoin", urlencodedParser, (req, res, next)=>{
                 // console.log("asd");
             }
             else{
-                console.log(result);
+                // console.log(result);
                 res.send({"statusCode":200, "errMsg": "no error"});
             }
         })

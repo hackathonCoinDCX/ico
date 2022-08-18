@@ -28,6 +28,15 @@ function DevDashboard(props) {
       <><p>No entries in table</p></>
     );
   }
+
+  function checkSession(){
+    fetch(`http://localhost:3001/checksession`)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("check session :", json);
+    });
+  }
+
   return (
     <div>
       <h1> Welcome to DevDashboard </h1>
@@ -37,6 +46,7 @@ function DevDashboard(props) {
       <Link to={{pathname: "/AddCoin", search: `?dev_id=${coinlist[0].dev_id}`}}>
       <button>Add New Coin</button>
       </Link>
+      <button onClick={checkSession}>check seesion</button>
     </div>
   );
 }
