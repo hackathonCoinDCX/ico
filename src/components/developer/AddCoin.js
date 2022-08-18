@@ -19,12 +19,12 @@ function AddCoin(props) {
     about: "",
     start_date: "",
     end_date: "",
-    start_price: "",
-    end_price: "",
+    start_price: 0,
+    end_price: 0,
     platform: "",
     category:"",
-    total_tokens: "",
-    min_tokens: "",
+    total_tokens: 0,
+    min_tokens: 0,
     white_paper:""
   });
 
@@ -47,10 +47,12 @@ function AddCoin(props) {
     else if(data.end_date < data.start_date){
       alert("End Date cannot come before Start Date");
     }
-    else if(data.total_tokens<data.min_tokens){
+    else if(parseInt(data.total_tokens) < parseInt(data.min_tokens)){
+      console.log("Total Tokens", data.total_tokens);
+      console.log("Min Tokens", data.min_tokens);
       alert("Total tokens should be more than minimum Tokens");
     }
-    else if(data.end_price<data.start_price){
+    else if(parseInt(data.end_price)<parseInt(data.start_price)){
       alert("End Price should be more than Start Price");
     }
     else{
