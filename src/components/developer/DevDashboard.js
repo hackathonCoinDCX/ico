@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import HomePageTable from "../utility/HomePageTable";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link , Routes, Route, useNavigate} from "react-router-dom";
+import { Button } from "react-bootstrap";
 
-function DevDashboard(props) {
+function DevDashboard(props) {const navigate = useNavigate();
+
   const params = useParams()
   console.log(params)
   console.log(props);
@@ -38,6 +40,15 @@ function DevDashboard(props) {
       </>
     );
   }
+  function onSignoutClick(){
+    fetch('http://127.0.0.1:3001/deletesession')
+    .then(response => response.json())
+    .then( (data) => {
+        // setUser({id: data.id})
+        console.log(data);
+        navigate('/');
+    });
+  }
 
   function checkSession(){
     fetch(`http://localhost:3001/checksession`)
@@ -49,6 +60,11 @@ function DevDashboard(props) {
 
   return (
     <div>
+      <Button
+          color="white"
+          onClick={onSignoutClick}
+        >
+            Sign Out</Button>
       <h1> Welcome to DevDashboard </h1>
       <div>
         <HomePageTable listiteam={coinlist} tablerowlink={""} />

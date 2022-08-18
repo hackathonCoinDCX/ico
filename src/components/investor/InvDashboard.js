@@ -33,6 +33,7 @@ function InvDashboard() {
         .then( (data) => {
             // setUser({id: data.id})
             console.log(data);
+            navigate('/');
         });
     }
     if(coinlist.length==0 || dataIsLoaded==false){
@@ -69,7 +70,7 @@ function InvDashboard() {
           color="white"
           onClick={onSignoutClick}
         >
-            <Link to='/'>Sign Out</Link></Button>
+            Sign Out</Button>
       <h1> Welcome to InvDashboard </h1>
       <div>
         <HomePageTable listiteam={coinlist} tablerowlink={""} />

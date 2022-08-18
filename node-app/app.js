@@ -25,9 +25,9 @@ app.use(bodyParser.json())
 // Connect Database
 const con = mysql.createConnection({
     host:"localhost",
-    user:"rails_user",
-    password:"pass",
-    database:"demo_project_development",
+    user:"root",
+    password:"root",
+    database:"IPO",
     // dateStrings: true
 });
 
@@ -125,6 +125,7 @@ app.post('/deletesession', (req, res) => {
     });
 });
 
+
 app.post('/LoginIn', (req, res, next) => {
     let { username, password } = req.body;
     let email=username;
@@ -200,6 +201,7 @@ app.post('/LoginIn', (req, res, next) => {
         }
     });
 });
+
 
 app.post('/LoginDev', (req, res, next) => {
     console.log(req);
@@ -483,6 +485,36 @@ app.get("/bid/:investorid", urlencodedParser, (req, res)=>{
         // res.send(result);
     })
 })
+
+app.post("/allocate", (req,res)=>{
+    // allcate = 0 means not allocated
+    var today = new Date.now().format('YYYY-MM-DD');
+    var qry = `select coin_id from coinlist where end_date < ${today}}`
+    con.query(qry, (err, result)=>{
+        if (err) throw err;
+        
+        if(result.length===0){
+            res.send({msg:"Allocation Done"});
+        }
+        else{
+            for (let index = 0; index < result.length; index++) {
+                var qry2 = `select * from coinlist where id=${result[index].coin_id} and end_date < ${today}`
+                con.query(qry2, (err, result2)=>{
+                    if(err) throw err;
+                    if(result2.length===0){
+                        res.send({msg:"Allocation Done"});
+                    }
+                    else{
+                        
+                    }
+                })
+            }
+            var qry2 = `select `
+        }
+    })
+})
+
+
 
 app.listen(3001, () => {
     console.log("server running at 3001");

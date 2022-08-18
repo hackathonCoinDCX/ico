@@ -36,11 +36,22 @@ function AddCoin(props) {
 
   function handleSubmit(event) {
     console.log("following values are set : ", coinlistobj);
+    
+
     // event.preventDefault();
     let url = "http://localhost:3001/user/developer/listnewcoin";
     let data = coinlistobj;
     if(data.about == "" || data.category == "" || data.coin_name == "" || data.dev_id == "" || data.end_date == "" || data.end_price  == "" || data.min_tokens == "" || data.platform == "" || data.start_date == "" || data.start_price == "" || data.total_tokens == "" || data.white_paper == "" ){
       alert("Empty fields please fill all details");
+    }
+    else if(data.end_date < data.start_date){
+      alert("End Date cannot come before Start Date");
+    }
+    else if(data.total_tokens<data.min_tokens){
+      alert("Total tokens should be more than minimum Tokens");
+    }
+    else if(data.end_price<data.start_price){
+      alert("End Price should be more than Start Price");
     }
     else{
     fetch(url, {
