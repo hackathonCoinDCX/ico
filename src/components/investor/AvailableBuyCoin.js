@@ -1,120 +1,187 @@
 import React from "react";
 import { useState } from "react";
+// import { useLocation } from "react";
 
 const AvailableCoinForm = (props) => {
-
+  // const location = useLocation();
+  // var dead = new URLSearchParams(location.search).get("inv_id");
+  var dead = 2;
+  var status = true;
+  var todaydate = new Date();
+  // console.log("id: ", dead);
   const [dataIsLoaded, setdataIsLoaded] = useState(false);
   const [bidData, setBidData] = useState({
-    selectedCoin: "",
-    bid_quantity: "",
-    bid_price:  "",
-    id: 2,
-    status: "",
+    bid_quantity: 0,
+    bid_price: 0,
     todaydate: new Date(),
-    expDate: new Date(),
-    startDate: new Date(),
   });
 
+  const [selectedCoin, setSelectedCoin] = useState({});
+  const [condition, setCondition] = useState(0);
+
   if (dataIsLoaded == false) {
-    fetch(`http://127.0.0.1:3001/coinlist/${2}`)
+    fetch(`http://127.0.0.1:3001/coinlist/${dead}`)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-        setBidData(json);
+        setSelectedCoin(json[0]);
         setdataIsLoaded(true);
       });
   }
-  
+
+  console.log("selectedCoin", selectedCoin);
+  console.log(new Date(selectedCoin.start_date));
+
+  // const fetchingCondition=() => {
+  //   if((bidData.todaydate.getTime() > bidData.startDate.getTime()) && (bidData.todaydate.getTime() < bidData.expDate.getTime()))
+  // }
+
   const handleChange = (event) => {
-    let input = {[event.target.name]: event.target.value};
-    setBidData({...bidData, ...input});
+    let input = { [event.target.name]: event.target.value };
+    setBidData({ ...bidData, ...input });
   };
 
   const handleSubmit = (event) => {
-    console.log("request success");
     console.log(event);
-    event.preventDefault();
+    setBidData({
+      bid_quantity: 10,
+      bid_price: 30,
+      todaydate: new Date(),
+    });
+
+    
   };
 
-  const renderForm = (selectedCoin) => {
-    return (
-      <form className="form-horizontal" onSubmit={handleSubmit}>
-        <div class="form-group">
-          <label for="">Enter quantity </label>
-          <input
-            type="number"
-            id="total-price"
-            min={selectedCoin[0].min_tokens}
-            placeholder={"more than " + selectedCoin[0].min_tokens}
-            onChange={handleChange}
-          />
-        </div>
-        <div class="form-group">
-          <label>Enter Price</label>
-          <input
-            type="number"
-            className="price-range"
-            id="total-price1"
-            min={selectedCoin[0].start_price}
-            max={selectedCoin[0].end_price}
-            placeholder={
-              selectedCoin[0].start_price + "-" + selectedCoin[0].end_price
-            }
-            onChange={handleChange}
-          />
-        </div>
-        <div class="form-group">
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    );
-  };
+  // const renderForm = () => {
+  //   return (
+  //     <form className="form-horizontal" onSubmit={handleSubmit}>
+  //       <div class="form-group">
+  //         <label for="">Enter quantity </label>
+  //         <input
+  //           type="number"
+  //           name="total-quantity"
+  //           id="total-quantity"
+  //           min={selectedCoin.min_tokens}
+  //           placeholder={"more than " + selectedCoin.min_tokens}
+  //           onChange={handleChange}
+  //         />
+  //       </div>
+  //       <div class="form-group">
+  //         <label>Enter Price</label>
+  //         <input
+  //           type="number"
+  //           className="price-range"
+  //           name="total-price"
+  //           id="total-price"
+  //           min={selectedCoin.start_price}
+  //           max={selectedCoin.end_price}
+  //           placeholder={
+  //             selectedCoin.start_price + "-" + selectedCoin.end_price
+  //           }
+  //           onChange={handleChange}
+  //         />
+  //       </div>
+  //       <div class="form-group">
+  //         <input type="submit" value="Submit" />
+  //       </div>
+  //     </form>
+  //   );
+  // };
 
   const rendorNotActive = () => {
-    if (bidData.todaydate.getTime() < bidData.startDate.getTime())
-      return <div>Please be patient</div>;
-    else return <div> You're late</div>;
+    // if (bidData.todaydate.getTime() < bidData.startDate.getTime())
+    //   return (<div>Please be patient</div>);
+    // else return (<div> You're late</div>);
+    return (<div> running</div>);
+  };
+
+  const renderFormIfActive = () => {
+    // const bidData = this.state.bidData;
+    // console.log("bidData: ", bidData);
+    // if((bidData.todaydate.getTime() > bidData.startDate.getTime()) && (bidData.todaydate.getTime() < bidData.expDate.getTime())){
+    // render form here
+    // return renderForm();
+    if (status) {
+      return (
+        <form className="form-horizontal" onSubmit={handleSubmit}>
+          <div class="form-group">
+            <label for="">Enter quantity </label>
+            <input
+              type="number"
+              name="total-quantity"
+              id="total-quantity"
+              min={selectedCoin.min_tokens}
+              placeholder={"more than " + selectedCoin.min_tokens}
+              onChange={handleChange}
+            />
+          </div>
+          <div class="form-group">
+            <label>Enter Price</label>
+            <input
+              type="number"
+              className="price-range"
+              name="total-price"
+              id="total-price"
+              min={selectedCoin.start_price}
+              max={selectedCoin.end_price}
+              placeholder={
+                selectedCoin.start_price + "-" + selectedCoin.end_price
+              }
+              onChange={handleChange}
+            />
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      );
+    } else if (true){
+      return (<div> Please be patient</div>);
+    }
+    else { 
+      return (<div>you are late</div>);
+    }
+    // return (<div>renderFormIfActive</div>)
+    // } else {
+    //   if (bidData.todaydate.getTime() < bidData.startDate.getTime())
+    //     return (<div>Please be patient</div>);
+    //   else
+    //     return (<div> You're late</div>);
+    // };
   };
 
   return (
     <div>
       <h3> Buy Coin</h3>
       <div>
-        Coin Name : <span>{bidData.coin_name}</span>
+        Coin Name : <span>{selectedCoin.coin_name}</span>
       </div>
       <div>
-        category : <span>{bidData.category}</span>
+        category : <span>{selectedCoin.category}</span>
       </div>
       <div>
-        about : <span>{bidData.about}</span>
+        about : <span>{selectedCoin.about}</span>
       </div>
       <div>
-        endDate : <span>{bidData.end_date}</span>
+        endDate : <span>{selectedCoin.end_date}</span>
       </div>
       <div>
-        min token limit : <span>{bidData.min_tokens}</span>
+        min token limit : <span>{selectedCoin.min_tokens}</span>
       </div>
       <div>
-        platform : <span>{bidData.platform}</span>
+        platform : <span>{selectedCoin.platform}</span>
       </div>
       <div>
-        price range :{" "}
+        price range :
         <span>
-          {bidData.start_price}-{bidData.end_price}
+          Rs {selectedCoin.start_price} to {selectedCoin.end_price}
         </span>
       </div>
       <div>
-        white paper : <span>{bidData.white_paper}</span>
+        white paper : <span>{selectedCoin.white_paper}</span>
       </div>
-      {/* <div>{this.renderForm(bidData/div> */}
-
-      {/* <div>
-        {
-        this.state.todaydate.getTime() > this.state.startDate.getTime() && this.state.todaydate.getTime() < this.state.expDate.getTime() ? this.renderForm(bidData:this.rendorNotActive(this.state.status))
-        }
-      </div> */}
+      {renderFormIfActive()}
     </div>
   );
-}
+};
 
 export default AvailableCoinForm;
