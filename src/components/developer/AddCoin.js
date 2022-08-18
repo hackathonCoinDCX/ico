@@ -39,6 +39,10 @@ function AddCoin(props) {
     // event.preventDefault();
     let url = "http://localhost:3001/user/developer/listnewcoin";
     let data = coinlistobj;
+    if(data.about == "" || data.category == "" || data.coin_name == "" || data.dev_id == "" || data.end_date == "" || data.end_price  == "" || data.min_tokens == "" || data.platform == "" || data.start_date == "" || data.start_price == "" || data.total_tokens == "" || data.white_paper == "" ){
+      alert("Empty fields please fill all details");
+    }
+    else{
     fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         // mode: 'cors', // no-cors, *cors, same-origin
@@ -63,6 +67,7 @@ function AddCoin(props) {
         }
         // console.log("json from response is: " + json);
 			})
+    }
       event.preventDefault();
     }
 	
