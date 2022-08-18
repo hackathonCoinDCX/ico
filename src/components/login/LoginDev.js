@@ -1,39 +1,45 @@
 import React, { useState, Component } from "react";
-import { Link } from "react-router-dom";
+import { Link , Routes, Route, useNavigate} from "react-router-dom";
+import DevDashboard from '../developer/DevDashboard';
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
-
 function LoginDev(props) {
-
-	const [user, setUser] = useState({
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    id:"",
+    name:"",
     email:"",
     password:"",
+    developer:"",
+    wallet:""
   });
-
   function onLoginClick() {
     console.log("signup click");
-    if(user.name === "" || user.email === "" || user.mobile === "" || user.password === "" || user.confpassword === ""){
-      alert("Please fill all the fields");
+    if( user.email =="" || user.password==""){
+        alert("Please fill all the fields");
     }
-    else if(user.mobile.length !== 10){
-        alert("Please enter a valid mobile number");
-    }
-    else if(user.password !== user.confpassword){
-        alert("Password and Confirm Password do not match");
-    }
-    else if (user.password.length < 8) {
-      alert("Password should be atleast 8 characters");
-    }
-    else{
-    console.log("Sign up " + user.username + " " + user.password);
-    } 
-  }
-
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user.email,  password: user.password})
+    };
+    fetch('http://127.0.0.1:3001/LoginDev', requestOptions)
+        .then(response => response.json())
+        .then( (data) => {
+            if(data.msg == "Successfull"){
+                console.log(JSON.stringify(data.id));
+                // this.setState({ dev_id: data.id});
+                navigate('/DevDashboard', { dev_id: data.id });
+            }
+            else{
+                alert("Incorrect Email or Password \nPlease check your login information.");
+            }
+        });
+  };
   function onChange(e){
     console.log(e.target.name, e.target.value);
     let input = {[e.target.name]: e.target.value };
     setUser({...user, ...input});
   }
-
   return (
     <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200%', width: '200%',}}>
       <Col md="4">
@@ -44,22 +50,27 @@ function LoginDev(props) {
             <Form.Control name="email" type="email" placeholder="Enter email" onChange={onChange}/>
           </Form.Group>
           <br />
-          
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Password</Form.Label>
             <Form.Control name="password" type="password" placeholder="" onChange={onChange}/>
           </Form.Group>
             <br />
-          
           </Form>
-
           <Button color="primary" onClick={onLoginClick}>Login</Button>
           <p className="mt-2">
           Don't have account? <Link to="/SignUpDev">Signup</Link>
         </p>
         </Col>
+        <Routes>
+          <Route path="/DevDashboard" element={<DevDashboard/>} />
+      </Routes>
      </Container>
   );
 }
-
 export default LoginDev;
+
+
+
+
+
+

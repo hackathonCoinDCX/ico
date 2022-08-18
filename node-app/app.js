@@ -36,6 +36,7 @@ con.connect((err) => {
 });
 
 ///////////////////////// APIs /////////////////////////////////
+
 var iid = "";
 
 app.get('/checksession', (req, res) => {
@@ -90,25 +91,21 @@ app.post('/deletesession', (req, res) => {
     });
 });
 
-app.post('/login', (req, res, next) => {
+app.post('/LoginIn', (req, res, next) => {
     // let { email, password } = req.body;
-
     let email="aab";
     let password = "ass";
-
     email = email.toLowerCase();
     // if(!email.length){
     //     return res.json({'alert': 'enter your email'});
     // } else if(password.length < 8){
     //     return res.json({'alert': 'password should be 8 letters long'});
     // }
-    
     var qry = `select email from users where email= '${email}'`
     con.query(qry, (err, result) => {
         if(err) throw err;
         // console.log(result.length);
         console.log("asdads : " + JSON.stringify(result));
-        
         if(result.length==0){
             console.log(JSON.stringify(result), "empty");
             console.log("Incorrect Email");
@@ -133,12 +130,10 @@ app.post('/login', (req, res, next) => {
                     console.log(emailAll);
                     console.log("Login Successful");
                     res.setHeader('Content-Type', 'application/json');
-
                     qry3 = `select * from users where email='${email}'`;
                     con.query(qry3, (err, result3) => {
                         if(err) throw err;
                         console.log(`Result3 : ${JSON.stringify(result3)}`);
-
                         if(result3.length==0){
                             req.session.msg = `Authentication failed: ${result.failMessage}`
                             console.log(req.session);
@@ -155,7 +150,6 @@ app.post('/login', (req, res, next) => {
                             var value = date.format(now,'YYYY-MM-DD HH:mm:ss');
                             qry4 = `insert into session values(${req.session.user[0].id}, '${req.sessionID}', '${value}', '${date.format(req.session.cookie.expires,'YYYY-MM-DD HH:mm:ss')}')`
                             console.log(qry4);
-                        
                             con.query(qry4, (err, result4)=>{
                                 if (err) throw err;
                                 else{
@@ -163,7 +157,85 @@ app.post('/login', (req, res, next) => {
                                     console.log("successfully Added"+ result4);
                                 }
                             })
-                            res.json(req.session);
+                            res.send({"inv_id": result3.id});
+                            });
+                        }
+                    })
+                }
+            });
+        }
+    });
+});
+
+app.post('/LoginDev', (req, res, next) => {
+    console.log(req);
+    let { username, password } = req.body;
+    let email = username
+    // let email="aab";
+    // let password = "ass";
+    email = email.toLowerCase();
+    // if(!email.length){
+    //     return res.json({'alert': 'enter your email'});
+    // } else if(password.length < 8){
+    //     return res.json({'alert': 'password should be 8 letters long'});
+    // }
+    var qry = `select email from users where email= '${email}'`
+    con.query(qry, (err, result) => {
+        if(err) throw err;
+        // console.log(result.length);
+        console.log("asdads : " + JSON.stringify(result));
+        if(result.length==0){
+            console.log(JSON.stringify(result), "empty");
+            console.log("Incorrect Email");
+            res.setHeader('Content-Type', 'application/json');
+            return res.json({"alert":"Incorrect Email"});
+        }
+        else {
+            console.log(JSON.stringify(result), "rows");
+            qry = `select password from users where email='${email}' and password='${password}'`
+            console.log(qry);
+            con.query(qry, (err, result2, fields) => {
+                if(err) throw err;
+                console.log(JSON.stringify(result2));
+                console.log(password);
+                if(result2.length ==0){
+                    console.log("Incorrect Password");
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.json({"alert":"Incorrect Password"});
+                }
+                else{
+                    emailAll = email;
+                    console.log(emailAll);
+                    console.log("Login Successful");
+                    res.setHeader('Content-Type', 'application/json');
+                    qry3 = `select * from users where email='${email}'`;
+                    con.query(qry3, (err, result3) => {
+                        if(err) throw err;
+                        console.log(`Result3 : ${JSON.stringify(result3)}`);
+                        if(result3.length==0){
+                            req.session.msg = `Authentication failed: ${result.failMessage}`
+                            console.log(req.session);
+                        }
+                        else{
+                            console.log(`Final Result: ${JSON.stringify(result3)}`);
+                            req.session.regenerate(() => {
+                            req.session.user = result3;
+                            req.session.msg = `Authenticated as ${JSON.stringify(result3)}`;
+                            console.log(`Session:${req.session}`);
+                            console.log(`Session:${JSON.stringify(req.session)}`);
+                            console.log(`${JSON.stringify(req.sessionID)}`);
+                            var now  =  new Date();
+                            var value = date.format(now,'YYYY-MM-DD HH:mm:ss');
+                            qry4 = `insert into session values(${req.session.user[0].id}, '${req.sessionID}', '${value}', '${date.format(req.session.cookie.expires,'YYYY-MM-DD HH:mm:ss')}')`
+                            console.log(qry4);
+                            con.query(qry4, (err, result4)=>{
+                                if (err) throw err;
+                                else{
+                                    iid = req.sessionID;
+                                    console.log("successfully Added"+ result4);
+                                }
+                            })
+                            res.send({msg: "Successfull" , dev_id: result3.id});
                             });
                         }
                     })
@@ -185,6 +257,7 @@ app.post("/coinlist", urlencodedParser, (req, res)=>{
     })
     // console.log(req);
 })
+
 app.get("/coinlist", urlencodedParser, (req, res)=>{
     let sqlInsert = 'select * from coinlist';
     let query = con.query(sqlInsert, (err, result) => {
@@ -195,14 +268,7 @@ app.get("/coinlist", urlencodedParser, (req, res)=>{
     })
     // console.log(req);
 })
-// app.post("/signup", urlencodedParser, (req, res)=>{
-//     const data=req.body;
-//     let sqlInsert = 'INSERT INTO signup SET ?';
-//     con.query(sqlInsert,data,(err,result)=>{
-//         if(err) throw err;
-//         res.send(JSON.stringify({"status":200, "error":null, response:result}))
-//     })
-// })
+
 app.post('/signup', function(req, res) { //register
     let name = req.body.name;
     let email = req.body.email;
@@ -239,6 +305,7 @@ app.get("/coin/:Id", urlencodedParser, (req, res)=>{
     })
     // console.log(req);
 })
+
 app.get("/user1/:Id",urlencodedParser, (req, res)=>{
     //console.log(req.params.Id);
     let sqlInsert = 'select * from bid where Id='+req.params.Id;
@@ -271,20 +338,7 @@ app.get("/user1/:Id",urlencodedParser, (req, res)=>{
             }
         })
     })
-// app.post("/submit-name", urlencodedParser, (req, res)=>{
-//     console.log(req.body.yourname, "asdadsadsas");
-//     let data = { yourname : req.body.yourname };
-//     let sqlInsert = 'INSERT INTO test SET ?';
-//     let query = con.query(sqlInsert, data, (err, result) => {
-//         if(err) throw err;
-//         res.send(JSON.stringify({"status":200, "error":null, response:result}))
-//     })
-//     // console.log(req);
-// })
-// app.get("/", (req, res)=>{
-//     console.log("asdads");
-//     res.json({"sda":"asdad"});
-// })
+
 app.get("/coinlist/:id", urlencodedParser, (req, res)=>{
     let sqlInsert = 'select * from coinlist where id = ' + req.params.id;
     let query = con.query(sqlInsert, (err, result) => {
@@ -307,7 +361,7 @@ app.get("/user/developer/coinlist", urlencodedParser, (req, res)=>{
     })
 })
 
-app.post("/user/developer/listnewcoin", urlencodedParser, (req, res)=>{
+app.post("/user/developer/listnewcoin", urlencodedParser, (req, res, next)=>{
     console.log("api to /user/developer/listnewcoin");
     console.log(req.body);
     let sd = new Date();
@@ -336,12 +390,25 @@ app.post("/user/developer/listnewcoin", urlencodedParser, (req, res)=>{
 
     console.log(newcoindata);
     let sqlInsert = `insert into coinlist(dev_id, coin_name, about, start_date, end_date, start_price, end_price, platform, category, total_tokens, min_tokens, white_paper) values('${newcoindata.dev_id}', '${newcoindata.coin_name}', '${newcoindata.about}', '${newcoindata.start_date}', '${newcoindata.end_date}', ${newcoindata.start_price}, ${newcoindata.end_price}, '${newcoindata.platform}','${newcoindata.category}', ${newcoindata.total_tokens}, ${newcoindata.min_tokens},'${newcoindata.white_paper}')`;
-    console.log(sqlInsert);
-    let query = con.query(sqlInsert, (err, result) => {
-        if(err) throw err;
-        console.log(result);
-        res.send({"statusCode":200, "errMsg": "no error"});
-    })
+    console.log("SQL Query : ==> " + sqlInsert);
+    try {
+        con.query(sqlInsert, (err, result) => {
+            if(err) { 
+                // throw err;
+                console.log("err");
+                return res.send({"statusCode":500, "alert":"Duplicate coin name"});
+                // next();
+                // console.log("asd");
+            }
+            else{
+                console.log(result);
+                res.send({"statusCode":200, "errMsg": "no error"});
+            }
+        })
+    } catch (error) {
+        console.log("catch block");
+        res.send({"alert":"Duplicate coin name"});
+    }
 })
 
 app.get("/bid/:investorid", urlencodedParser, (req, res)=>{

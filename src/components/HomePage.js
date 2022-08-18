@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import HomePageTable from "./utility/HomePageTable";
+import NavBar from "./utility/NavBar";
 
 function App(props) {
 
@@ -18,7 +19,8 @@ function App(props) {
 	}
 	else return (
 		<div style={{display: 'flex',alignItems: 'center',justifyContent: 'center'}}>
-		<div className = "App">       
+		<div className = "App">   
+			<NavBar></NavBar>    
 			<HomePageTable listiteam={items} tablerowlink={"/Coin/"}></HomePageTable>
 		</div>
 		</div>
