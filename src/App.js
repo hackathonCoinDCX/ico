@@ -11,6 +11,7 @@ import DevDashboard from './components/developer/DevDashboard';
 import AddCoin from './components/developer/AddCoin';
 import NavBar from "./components/utility/NavBar";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import InvDashboard from './components/investor/InvDashboard';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/AvailableCoinForm" element={<AvailableCoinForm/>}/>
           <Route exact path="/DevDashboard" element={<DevDashboard/>}/>
           <Route exact path="/AddCoin" element={<AddCoin/>}/>
+          <Route exact path="/InvDashboard" element={<InvDashboard/>}/>
         </Routes>
         </BrowserRouter>
       </div>
