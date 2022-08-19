@@ -23,4 +23,4 @@
 - Use '[axios](https://blog.logrocket.com/axios-vs-fetch-best-http-requests/#:~:text=To%20send%20data%2C%20fetch(),stringify%20method)' library instead of 'fetch API' to make API calls
 - HomePage.js, InvDashboard.js: Handle the cases when API returns an error
 - In most of your use cases, using a class based component with APIs being called in ```componentDidMount``` would've been useful
-- JSX code is actually Javascript (and not html). Format it properly.
+- [JSX code is actually Javascript (and not html)](https://babeljs.io/repl/#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.21&spec=false&loose=false&code_lz=DwEwlgbgfAUMD05pA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.18.12&externalPlugins=&assumptions=%7B%7D). Format it properly.
